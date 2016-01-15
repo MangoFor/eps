@@ -3,14 +3,24 @@ var request = require('supertest');
 var express = require('../index.js');
 
 
-describe('app', function(){
-  describe('handle', function(){
-    it('app.handle should recieve all request', function(done){
+describe('application', function() {
+  describe('use', function() {
+    it('app.use can add new route', function(done){
     	var app = express();
+    	app.use('/user',function(req,res){
+    		res.end('/user')
+    	})
+    	app.use('/index',function(req,res){
+    		res.end('/index')
+    	})
 
     	request(app)
-    	.get('/')
-    	.expect(200,'yes',done);
+    	.get('/user')
+    	.expect(200,'/user',done);
+
+    	request(app)
+    	.get('/index')
+    	.expect(200,'/user',done);
 		})
 	})
 })
